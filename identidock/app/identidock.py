@@ -5,9 +5,11 @@ app = Flask(__name__)
 default_name = "Igor Matiek"
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def main_page():
     name = default_name
+    r = requests.get('http://dnmonster:8000/monster/{}?size=80'.format(name))
+    image = r.content
     data_html = '''
     <html lang="en">
     <head>
@@ -21,11 +23,11 @@ def main_page():
         </form>
         <p>
             You look like a:
-            <img src="/monster/monster.png"/>
+            <img src={}>
         </p>
     </body>
     </html>
-    '''.format(name)
+    '''.format(name, image)
     return data_html
 
 

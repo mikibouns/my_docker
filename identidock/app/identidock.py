@@ -1,12 +1,12 @@
-from flask import Flask, render_template
-
+from flask import Flask, render_template, Response
+import requests
 
 app = Flask(__name__)
 default_name = "Igor Matiek"
 
 
 @app.route('/')
-def get_identicon():
+def main_page():
     name = default_name
     data_html = '''
     <html lang="en">
@@ -27,6 +27,13 @@ def get_identicon():
     </html>
     '''.format(name)
     return data_html
+
+
+@app.route('/monster/<name>')
+def get_identicon(name):
+    r = requests.get('http://dnmonster:8000/monster/{}?size=80'.format(name))
+    image = r.content
+    return Response(image, mimetype='img/png')
 
 
 if __name__ == '__main__':

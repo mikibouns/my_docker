@@ -19,7 +19,10 @@ def get_identicon():
             Hello <input type="text" name="name" value="{}">
             <input type="submit" value="submit">
         </form>
-        <img src="/monster/monster.png"/>
+        <p>
+            You look like a:
+            <img src="/monster/monster.png"/>
+        </p>
     </body>
     </html>
     '''.format(name)

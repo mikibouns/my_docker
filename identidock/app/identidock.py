@@ -16,7 +16,7 @@ def get_identicon():
     </head>
     <body>
         <form method="POST">
-            Hello <input type="text" name="name" value={}>
+            Hello <input type="text" name="name" value="{}">
             <input type="submit" value="submit">
         </form>
         <img src="/monster/monster.png"/>

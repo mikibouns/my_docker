@@ -2,7 +2,7 @@ identidock:
   build: .
   ports:
     - "5000:5000"
-  enviroment:
+  environment:
     ENV: DEV
   volumes:
     - ./app:/app

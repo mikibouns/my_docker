@@ -1,4 +1,4 @@
-from flask import Flask, Response, request
+from flask import Flask, Response, request, render_template
 import requests
 import hashlib # импортируем библиотеку для хэширования даных
 
@@ -15,25 +15,25 @@ def main_page():
         name = request.form['name'] # получаем значение поля формы
     salted_name = salt + name # добавляем соль к полученному значению из формы
     name_hash = hashlib.sha256(salted_name.encode()).hexdigest() # получаем хэшированное значение
-    data_html = '''
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Identidock</title>
-    </head>
-    <body>
-        <form method="POST">
-            Hello <input type="text" name="name" value="{0}">
-            <input type="submit" value="submit">
-        </form>
-        <p>
-            You look like a:
-            <img src="/monster/{1}"/>
-        </p>
-    </body>
-    </html>
-    '''.format(name, name_hash) # изменяем значение парамеитра src для тега img
-    return data_html
+    # data_html = '''
+    # <html lang="en">
+    # <head>
+    #     <meta charset="UTF-8">
+    #     <title>Identidock</title>
+    # </head>
+    # <body>
+    #     <form method="POST">
+    #         Hello <input type="text" name="name" value="{0}">
+    #         <input type="submit" value="submit">
+    #     </form>
+    #     <p>
+    #         You look like a:
+    #         <img src="/monster/{1}"/>
+    #     </p>
+    # </body>
+    # </html>
+    # '''.format(name, name_hash) # изменяем значение парамеитра src для тега img
+    return render_template('index.html', name=name, name_hash=name_hash)
 
 
 @app.route('/monster/<name>')

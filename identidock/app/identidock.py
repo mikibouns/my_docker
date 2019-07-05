@@ -21,11 +21,11 @@ def main_page():
         </form>
         <p>
             You look like a:
-            <img src="http://dnmonster:8000/monster/{}?size=80"/>
+            <img src="/monster/monster.png"/>
         </p>
     </body>
     </html>
-    '''.format(name, name)
+    '''.format(name)
     return data_html
 
 

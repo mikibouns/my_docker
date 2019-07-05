@@ -8,7 +8,7 @@ default_name = 'Igor Matiek'
 @app.route('/')
 def get_identicon():
     name = default_name
-    return render_template('index.html')
+    return render_template('index.html', data=name)
 
 
 if __name__ == '__main__':

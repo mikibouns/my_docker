@@ -8,7 +8,22 @@ default_name = 'Igor Matiek'
 @app.route('/')
 def get_identicon():
     name = default_name
-    return render_template('index.html')
+    data_html = '''
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Identidock</title>
+    </head>
+    <body>
+        <form method="POST">
+            Hello <input type="text" name="name" value={}>
+            <input type="submit" value="submit">
+        </form>
+        <img src="/monster/monster.png"/>
+    </body>
+    </html>
+    '''.format(name)
+    return data_html
 
 
 if __name__ == '__main__':

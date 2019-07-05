@@ -1,9 +1,11 @@
 from flask import Flask, Response, request, render_template
 import requests
 import hashlib # импортируем библиотеку для хэширования даных
+import redis # библиотека для кэширования данных
 
 
 app = Flask(__name__)
+cache = redis.StrictRedis(host='redis', port=6379, db=0) # настройка Redis
 salt = "UNIQUE_SALT" # соль для хэш-функции
 default_name = "Igor Matiek"
 
@@ -20,8 +22,12 @@ def main_page():
 
 @app.route('/monster/<name>')
 def get_identicon(name):
-    r = requests.get('http://dnmonster:8080/monster/{}?size=80'.format(name))
-    image = r.content
+    image = cache.get(name) # получаем name
+    if image is None: # проверяем значение name
+        print("Cash miss", flush=True) # выводится информация об отсутствии кэша
+        r = requests.get('http://dnmonster:8080/monster/{}?size=80'.format(name))
+        image = r.content
+        cache.set(name, image) # сгенерированный образ добавляется в кэш и связывается с именем, как в БД (ключ: значение)
     return Response(image, mimetype='image/png')
 
 
